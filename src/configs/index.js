@@ -1,0 +1,1 @@
+export const base_url = 'https://auth-example1.herokuapp.com/';

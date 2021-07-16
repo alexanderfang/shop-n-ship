@@ -1,24 +1,47 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from '@material-ui/styles';
+
+import { themeMain } from './configs/theme';
+import store from './store';
+import routes from './configs/routes';
 import './App.css';
+import ProtectedRoute from './components/protected_route';
+import SnSAppBar from './components/Appbar';
+
+const history = createBrowserHistory();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={themeMain}>
+      <Provider store={store}>
+        <Router history={history}>
+          <div className="App">
+            <SnSAppBar>
+              <Switch>
+                {routes.map((route) => {
+                  return route.isProtected
+                  ? (<ProtectedRoute 
+                    key={route.path}
+                    component={route.component}
+                    path={route.path}
+                    exact={route.path === '/'}
+                    />)
+                    : (<Route 
+                      key={route.path}
+                      component={route.component}
+                      path={route.path}
+                      exact={route.path === '/'}
+                      />)
+                    })}
+              </Switch>
+            </SnSAppBar>
+          </div>
+        </Router>
+      </Provider>
+    </ThemeProvider>
   );
 }
 

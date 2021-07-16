@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient( rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.32) ), url('./assets/doodles.png');
+  background-color: #cccccc
 }
 
 code {
